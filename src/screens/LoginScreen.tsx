@@ -59,6 +59,19 @@ export const LoginScreen: React.FC = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
+  React.useEffect(() => {
+    const checkLogin = async () => {
+      const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
+      if (isLoggedIn === 'true') {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Main' }],
+        });
+      }
+    };
+    checkLogin();
+  }, []);
+
   const handleLogin = async () => {
     setError('');
     setSuccess('');
@@ -68,8 +81,12 @@ export const LoginScreen: React.FC = () => {
         const user = JSON.parse(userData);
         if (email === user.email && password === user.password) {
           setSuccess('Login realizado com sucesso!');
+          await AsyncStorage.setItem('isLoggedIn', 'true');
           setTimeout(() => {
-            navigation.navigate({ name: 'Main', params: undefined });
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'Main' }],
+            });
           }, 1200);
         } else {
           setError('Email ou senha inválidos.');

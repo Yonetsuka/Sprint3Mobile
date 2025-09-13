@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import styled from 'styled-components/native';
 import { Switch } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 
 const Container = styled.ScrollView`
@@ -105,6 +106,15 @@ const ItemText = styled.Text`
 
 export const AccountScreen: React.FC = () => {
   const navigation = useNavigation();
+
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem('isLoggedIn');
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Login' }],
+    });
+  };
+
   return (
     <Container>
       {/* Header customizado */}
@@ -196,6 +206,20 @@ const XPBarFill = styled.View`
       <SectionTitle>Minha conta</SectionTitle>
       <Item><ItemText>Dados cadastrais</ItemText></Item>
       <Item><ItemText>Conta para menor de idade</ItemText></Item>
+
+      {/* Botão de logout */}
+      <TouchableOpacity
+        style={{
+          marginTop: 32,
+          backgroundColor: '#FF5555',
+          borderRadius: 8,
+          paddingVertical: 14,
+          alignItems: 'center',
+        }}
+        onPress={handleLogout}
+      >
+        <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>Sair da conta</Text>
+      </TouchableOpacity>
     </Container>
   );
 }
