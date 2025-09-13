@@ -35,7 +35,7 @@ const Input = styled.TextInput`
 const Button = styled.TouchableOpacity`
   width: 100%;
   height: 50px;
-  background-color: #34c759;
+  background-color: #FFB800;
   border-radius: 8px;
   justify-content: center;
   align-items: center;
@@ -120,7 +120,7 @@ export const RegisterScreen: React.FC = () => {
         <Text style={{ color: '#ff5555', marginBottom: 10, fontWeight: 'bold' }}>{error}</Text>
       ) : null}
       {success ? (
-        <Text style={{ color: '#34c759', marginBottom: 10, fontWeight: 'bold' }}>{success}</Text>
+        <Text style={{ color: '#FFB800', marginBottom: 10, fontWeight: 'bold' }}>{success}</Text>
       ) : null}
       <Button onPress={handleRegister}>
         <ButtonText>Registrar</ButtonText>

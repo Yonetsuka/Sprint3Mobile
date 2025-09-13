@@ -9,6 +9,8 @@ import { HomeScreen } from '../screens/HomeScreen';
 import { DashboardScreen } from '../screens/DashboardScreen';
 import { ProductsScreen } from '../screens/ProductsScreen';
 import { AccountScreen } from '../screens/AccountScreen';
+import { BolsaScreen } from '../screens/BolsaScreen';
+import { RewardsScreen } from '../screens/RewardsScreen';
 
 export type RootStackParamList = {
   Login: undefined;
@@ -17,6 +19,7 @@ export type RootStackParamList = {
   Dashboard: undefined;
   Products: undefined;
   Account: undefined;
+  Rewards: undefined;
   Investimentos: undefined;
   Banco: undefined;
   Bolsa: undefined;
@@ -45,7 +48,7 @@ function MainTabs() {
     >
       <Tab.Screen name="Investimentos" component={HomeScreen} options={{ tabBarLabel: 'Investimentos' }} />
       <Tab.Screen name="Banco" component={DashboardScreen} options={{ tabBarLabel: 'Banco' }} />
-      <Tab.Screen name="Bolsa" component={AccountScreen} options={{ tabBarLabel: 'Bolsa' }} />
+  <Tab.Screen name="Bolsa" component={BolsaScreen} options={{ tabBarLabel: 'Bolsa' }} />
       <Tab.Screen name="Produtos" component={ProductsScreen} options={{ tabBarLabel: 'Produtos' }} />
     </Tab.Navigator>
   );
@@ -57,7 +60,9 @@ export const AppNavigator: React.FC = () => {
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Main" component={MainTabs} options={{ headerShown: false }} />
+  <Stack.Screen name="Main" component={MainTabs} options={{ headerShown: false }} />
+  <Stack.Screen name="Rewards" component={RewardsScreen} options={{ headerShown: false }} />
+  <Stack.Screen name="Account" component={AccountScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

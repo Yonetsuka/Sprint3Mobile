@@ -1,6 +1,10 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
+import type { RootStackParamList } from '../navigation/AppNavigator';
 import styled from 'styled-components/native';
+import { AppHeader } from '../components/AppHeader';
 
 const Container = styled.ScrollView`
   flex: 1;
@@ -36,9 +40,12 @@ const MenuText = styled.Text`
   font-weight: bold;
 `;
 
+
 export const ProductsScreen: React.FC = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   return (
     <Container>
+      <AppHeader />
       <SectionTitle>Produtos</SectionTitle>
       <MenuGrid>
         <MenuItem><MenuText>Renda Fixa</MenuText></MenuItem>
@@ -48,7 +55,7 @@ export const ProductsScreen: React.FC = () => {
         <MenuItem><MenuText>COE</MenuText></MenuItem>
         <MenuItem><MenuText>Previdência</MenuText></MenuItem>
         <MenuItem><MenuText>Tesouro Direto</MenuText></MenuItem>
-        <MenuItem><MenuText>XPlay</MenuText></MenuItem>
+        <MenuItem onPress={() => navigation.navigate('Rewards')}><MenuText>XPlay</MenuText></MenuItem>
       </MenuGrid>
       <SectionTitle>Soluções Financeiras</SectionTitle>
       <MenuGrid>

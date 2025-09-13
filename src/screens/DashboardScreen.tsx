@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
+import { AppHeader } from '../components/AppHeader';
 
 const Container = styled.ScrollView`
   flex: 1;
@@ -88,18 +90,10 @@ const CardValue = styled.Text`
 `;
 
 export const DashboardScreen: React.FC = () => {
+  const navigation = useNavigation();
   return (
     <Container>
-      {/* Header */}
-      <Row style={{ marginBottom: 20 }}>
-        <Circle><Text style={{ color: '#fff', fontWeight: 'bold' }}>LA</Text></Circle>
-        <View style={{ flex: 1 }}>
-          <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 18 }}>Lucas</Text>
-        </View>
-        <Circle><Text style={{ color: '#fff' }}>💬</Text></Circle>
-        <Circle><Text style={{ color: '#fff' }}>🔔</Text></Circle>
-        <Circle><Text style={{ color: '#fff' }}>⚙️</Text></Circle>
-      </Row>
+      <AppHeader />
 
       {/* Saldo */}
       <Row style={{ marginBottom: 10 }}>
@@ -123,18 +117,6 @@ export const DashboardScreen: React.FC = () => {
         <YellowButton><Text style={{ color: '#000', fontWeight: 'bold' }}>Pedir cartão</Text></YellowButton>
       </Card>
       <YellowButton><Text style={{ color: '#000', fontWeight: 'bold' }}>Conheça nossos cartões</Text></YellowButton>
-
-      {/* Daily Quests & Achievements */}
-      <View style={{ backgroundColor: '#fff', borderRadius: 4, marginVertical: 15 }}>
-        <Text style={{ color: '#000', fontWeight: 'bold', textAlign: 'center' }}>DAILY QUESTS E ACHIVEMENTS</Text>
-      </View>
-      <Row style={{ marginBottom: 10 }}>
-        {[...Array(5)].map((_, i) => (
-          <Circle key={i} style={{ backgroundColor: i < 4 ? '#fff' : '#222' }}>
-            {i < 4 ? <Text style={{ color: '#000', fontWeight: 'bold' }}>✓</Text> : null}
-          </Circle>
-        ))}
-      </Row>
 
       {/* Missões do Dia */}
       <Text style={{ color: '#fff', fontWeight: 'bold', marginBottom: 10 }}>Missões do Dia</Text>

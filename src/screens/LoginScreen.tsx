@@ -34,7 +34,7 @@ const Input = styled.TextInput`
 const Button = styled.TouchableOpacity`
   width: 100%;
   height: 50px;
-  background-color: #007aff;
+  background-color: #FFB800;
   border-radius: 8px;
   justify-content: center;
   align-items: center;
@@ -84,7 +84,7 @@ export const LoginScreen: React.FC = () => {
 
   return (
     <Container>
-      <Title>MedApp</Title>
+      <Title>XpInc</Title>
       <Input
         placeholder="Email"
         placeholderTextColor="#8e8e93"
@@ -104,7 +104,7 @@ export const LoginScreen: React.FC = () => {
         <Text style={{ color: '#ff5555', marginBottom: 10, fontWeight: 'bold' }}>{error}</Text>
       ) : null}
       {success ? (
-        <Text style={{ color: '#34c759', marginBottom: 10, fontWeight: 'bold' }}>{success}</Text>
+        <Text style={{ color: '#f1e93eff', marginBottom: 10, fontWeight: 'bold' }}>{success}</Text>
       ) : null}
       <Button onPress={handleLogin}>
         <ButtonText>Entrar</ButtonText>
@@ -113,7 +113,7 @@ export const LoginScreen: React.FC = () => {
         <ForgotPasswordText>Esqueceu a senha?</ForgotPasswordText>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-        <Text style={{ color: '#34c759', marginTop: 20, fontWeight: 'bold', fontSize: 16 }}>Registrar</Text>
+        <Text style={{ color: '#FFB800', marginTop: 20, fontWeight: 'bold', fontSize: 16 }}>Registrar</Text>
       </TouchableOpacity>
     </Container>
   );

@@ -1,12 +1,86 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import { Switch } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
 
-const Container = styled.ScrollView`    
+const Container = styled.ScrollView`
   flex: 1;
   background-color: #000;
   padding: 20px;
+`;
+
+const HeaderRow = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+`;
+
+const Circle = styled.View`
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #222;
+  align-items: center;
+  justify-content: center;
+`;
+
+const BigCircle = styled.View`
+  width: 70px;
+  height: 70px;
+  border-radius: 35px;
+  background-color: #222;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+`;
+
+const LevelBarContainer = styled.View`
+  flex: 1;
+  height: 16px;
+  background-color: #333;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 4px;
+`;
+
+const LevelBarFill = styled.View`
+  height: 100%;
+  background-color: #fff;
+  width: 40%;
+`;
+
+const RankBarContainer = styled.View`
+  width: 100%;
+  height: 12px;
+  background-color: #333;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 16px 0 24px 0;
+`;
+
+
+const XPBarContainer = styled.View`
+  flex: 1;
+  height: 12px;
+  background-color: #333;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-left: 12px;
+`;
+
+const XPBarFill = styled.View`
+  height: 100%;
+  background-color: #fff;
+  width: 60%;
+`;
+
+const RankBarFill = styled.View`
+  height: 100%;
+  background-color: #fff;
+  width: 60%;
 `;
 
 const SectionTitle = styled.Text`
@@ -28,12 +102,65 @@ const ItemText = styled.Text`
   font-size: 16px;
 `;
 
+
 export const AccountScreen: React.FC = () => {
+  const navigation = useNavigation();
   return (
     <Container>
+      {/* Header customizado */}
+      <HeaderRow>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Circle>
+            <Ionicons name="arrow-back" size={22} color="#fff" />
+          </Circle>
+        </TouchableOpacity>
+        <View style={{ flexDirection: 'row', gap: 10 }}>
+          <Circle>
+            <Ionicons name="chatbubble-ellipses-outline" size={22} color="#fff" />
+          </Circle>
+          <Circle>
+            <Ionicons name="notifications-outline" size={22} color="#fff" />
+          </Circle>
+        </View>
+      </HeaderRow>
+
       <SectionTitle>Conta Digital</SectionTitle>
-      <Item><ItemText>Lucas</ItemText></Item>
-      <Item><ItemText>XP: 0 | Nível: 3</ItemText></Item>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
+        <BigCircle>
+          <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 28 }}>LA</Text>
+        </BigCircle>
+        <View style={{ flex: 1 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 2 }}>
+            <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 18 }}>Lucas Andrade</Text>
+            <XPBarContainer>
+              <XPBarFill />
+            </XPBarContainer>
+            <Text style={{ color: '#fff', fontSize: 12, marginLeft: 8 }}>120/300 XP</Text>
+          </View>
+          <Text style={{ color: '#fff', fontSize: 12, marginTop: 2 }}>Nível 3</Text>
+        </View>
+      </View>
+
+const XPBarContainer = styled.View`
+  width: 60px;
+  height: 8px;
+  background-color: #333;
+  border-radius: 4px;
+  overflow: hidden;
+`;
+
+const XPBarFill = styled.View`
+  height: 100%;
+  background-color: #42a5f5;
+  width: 40%;
+`;
+      <RankBarContainer>
+        <RankBarFill />
+      </RankBarContainer>
+      <Text style={{ color: '#fff', fontSize: 12, marginBottom: 16 }}>Ranking: Ouro</Text>
+
+      {/* ...restante do conteúdo original... */}
+
       <Item><ItemText>Agência: 0001 | Conta: 123456-7</ItemText></Item>
       <Item><ItemText>Central de benefícios</ItemText></Item>
 

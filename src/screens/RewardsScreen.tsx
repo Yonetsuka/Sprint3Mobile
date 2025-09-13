@@ -1,6 +1,15 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
 import styled from 'styled-components/native';
+const BackButton = styled.TouchableOpacity`
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+  background: transparent;
+`;
 
 const Container = styled.ScrollView`
   flex: 1;
@@ -86,9 +95,13 @@ const RedeemText = styled.Text`
 `;
 
 export const RewardsScreen: React.FC = () => {
+  const navigation = useNavigation();
   return (
     <Container>
-      <Title>Recompensas</Title>
+      <BackButton onPress={() => navigation.goBack()}>
+        <Ionicons name="arrow-back" size={28} color="#fff" />
+      </BackButton>
+      <Title style={{ textAlign: 'center', marginTop: 8 }}>Recompensas</Title>
       <XPCard>
         {/* Ícone XPlay */}
         <Image source={require('../../assets/xplay.png')} style={{ width: 32, height: 32 }} />
