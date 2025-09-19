@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
+import { useUser } from '../context/UserContext';
 
 const HeaderRow = styled.View`
   flex-direction: row;
@@ -28,14 +29,21 @@ const Name = styled.Text`
 
 export const AppHeader: React.FC = () => {
   const navigation = useNavigation();
+  const { user } = useUser();
+  const getInitials = (name: string) => {
+    if (!name) return '';
+    const parts = name.trim().split(' ');
+    if (parts.length === 1) return parts[0][0].toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  };
   return (
     <HeaderRow>
       <TouchableOpacity onPress={() => navigation.navigate('Account')}>
         <Circle>
-          <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 22 }}>LA</Text>
+          <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 22 }}>{getInitials(user?.name || '')}</Text>
         </Circle>
       </TouchableOpacity>
-      <Name>Lucas Andrade</Name>
+      <Name>{user?.name || 'Usuário'}</Name>
     </HeaderRow>
   );
 };

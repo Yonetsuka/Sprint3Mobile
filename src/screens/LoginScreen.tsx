@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useUser } from '../context/UserContext';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -52,12 +53,14 @@ const ForgotPasswordText = styled.Text`
   margin-top: 15px;
 `;
 
+
 export const LoginScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const { setUser } = useUser();
 
   React.useEffect(() => {
     const checkLogin = async () => {
@@ -82,6 +85,7 @@ export const LoginScreen: React.FC = () => {
         if (email === user.email && password === user.password) {
           setSuccess('Login realizado com sucesso!');
           await AsyncStorage.setItem('isLoggedIn', 'true');
+          setUser(user); // Atualiza contexto com nome/email
           setTimeout(() => {
             navigation.reset({
               index: 0,
@@ -135,5 +139,6 @@ export const LoginScreen: React.FC = () => {
     </Container>
   );
 };
+
 
 

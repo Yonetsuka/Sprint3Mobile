@@ -5,6 +5,7 @@ import { Switch } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
+import { useUser } from '../context/UserContext';
 
 const Container = styled.ScrollView`
   flex: 1;
@@ -106,7 +107,13 @@ const ItemText = styled.Text`
 
 export const AccountScreen: React.FC = () => {
   const navigation = useNavigation();
-
+  const { user } = useUser();
+  const getInitials = (name: string) => {
+    if (!name) return '';
+    const parts = name.trim().split(' ');
+    if (parts.length === 1) return parts[0][0].toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  };
   const handleLogout = async () => {
     await AsyncStorage.removeItem('isLoggedIn');
     navigation.reset({
@@ -114,7 +121,6 @@ export const AccountScreen: React.FC = () => {
       routes: [{ name: 'Login' }],
     });
   };
-
   return (
     <Container>
       {/* Header customizado */}
@@ -137,11 +143,11 @@ export const AccountScreen: React.FC = () => {
       <SectionTitle>Conta Digital</SectionTitle>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
         <BigCircle>
-          <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 28 }}>LA</Text>
+          <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 28 }}>{getInitials(user?.name || '')}</Text>
         </BigCircle>
         <View style={{ flex: 1 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 2 }}>
-            <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 18 }}>Lucas Andrade</Text>
+            <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 18 }}>{user?.name || 'Usuário'}</Text>
             <XPBarContainer>
               <XPBarFill />
             </XPBarContainer>
