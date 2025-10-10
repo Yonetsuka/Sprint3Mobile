@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Alert, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
@@ -6,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { API_BASE_URL } from '../services/api';
 
 const Container = styled.View`
   flex: 1;
@@ -75,13 +77,26 @@ export const RegisterScreen: React.FC = () => {
       return;
     }
     try {
-      await AsyncStorage.setItem('user', JSON.stringify({ name, email, password }));
-      setSuccess('Cadastro realizado com sucesso!');
-      setTimeout(() => {
-        navigation.navigate('Login');
-      }, 1200);
+      const response = await fetch(API_BASE_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      if (response.ok) {
+        setSuccess('Cadastro realizado com sucesso!');
+        setTimeout(() => {
+          navigation.navigate('Login');
+        }, 1200);
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || 'Erro ao cadastrar usuário.');
+      }
     } catch (e) {
-      setError('Não foi possível salvar os dados.');
+      console.error('Erro ao cadastrar:', e);
+      setError('Não foi possível conectar ao servidor ou realizar o cadastro.');
     }
   };
 
@@ -131,3 +146,4 @@ export const RegisterScreen: React.FC = () => {
     </Container>
   );
 };
+

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useUser } from '../context/UserContext';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
@@ -6,6 +7,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styled from 'styled-components/native';
+import { API_BASE_URL } from '../services/api';
 
 const Container = styled.View`
   flex: 1;
@@ -79,27 +81,28 @@ export const LoginScreen: React.FC = () => {
     setError('');
     setSuccess('');
     try {
-      const userData = await AsyncStorage.getItem('user');
-      if (userData) {
-        const user = JSON.parse(userData);
-        if (email === user.email && password === user.password) {
-          setSuccess('Login realizado com sucesso!');
-          await AsyncStorage.setItem('isLoggedIn', 'true');
-          setUser(user); // Atualiza contexto com nome/email
-          setTimeout(() => {
-            navigation.reset({
-              index: 0,
-              routes: [{ name: 'Main' }],
-            });
-          }, 1200);
-        } else {
-          setError('Email ou senha inválidos.');
-        }
+      const response = await fetch(API_BASE_URL);
+      const users = await response.json();
+
+      const user = users.find((u: any) => u.email === email && u.password === password);
+
+      if (user) {
+        setSuccess('Login realizado com sucesso!');
+        await AsyncStorage.setItem('isLoggedIn', 'true');
+        await AsyncStorage.setItem('user', JSON.stringify(user)); // Armazena o usuário completo
+        setUser(user); // Atualiza contexto com nome/email
+        setTimeout(() => {
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'Main' }],
+          });
+        }, 1200);
       } else {
-        setError('Nenhum usuário cadastrado.');
+        setError('Email ou senha inválidos.');
       }
     } catch (e) {
-      setError('Não foi possível acessar os dados.');
+      console.error('Erro ao fazer login:', e);
+      setError('Não foi possível conectar ao servidor ou realizar o login.');
     }
   };
 
@@ -139,6 +142,4 @@ export const LoginScreen: React.FC = () => {
     </Container>
   );
 };
-
-
 
