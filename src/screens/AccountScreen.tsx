@@ -123,7 +123,6 @@ export const AccountScreen: React.FC = () => {
   };
   return (
     <Container>
-      {/* Header customizado */}
       <HeaderRow>
           <TouchableOpacity onPress={() => navigation.goBack()}>
           <Circle>
@@ -175,7 +174,6 @@ const XPBarFill = styled.View`
       </RankBarContainer>
       <Text style={{ color: '#fff', fontSize: 12, marginBottom: 16 }}>Ranking: Ouro</Text>
 
-      {/* ...restante do conteúdo original... */}
 
       <Item><ItemText>Agência: 0001 | Conta: 123456-7</ItemText></Item>
       <Item><ItemText>Central de benefícios</ItemText></Item>
@@ -213,7 +211,6 @@ const XPBarFill = styled.View`
       <Item><ItemText>Dados cadastrais</ItemText></Item>
       <Item><ItemText>Conta para menor de idade</ItemText></Item>
 
-      {/* Botão de logout */}
       <TouchableOpacity
         style={{
           marginTop: 32,
