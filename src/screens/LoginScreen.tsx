@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useUser } from '../context/UserContext';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
@@ -80,6 +80,12 @@ export const LoginScreen: React.FC = () => {
   const handleLogin = async () => {
     setError('');
     setSuccess('');
+
+    if (!email || !password) {
+      setError('Por favor, preencha todos os campos.');
+      return;
+    }
+
     try {
       const response = await fetch(API_BASE_URL);
       const users = await response.json();
